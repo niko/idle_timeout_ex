@@ -1,6 +1,6 @@
 # IdleTimeout
 
-A simple mechanism to timeout idle Elixir processes - for example a GenServer - after a given time span of inactivity.
+A simple mechanism to timeout idle Elixir processes - for example a GenServer - after a given period of inactivity.
 
 ## Design goals
 

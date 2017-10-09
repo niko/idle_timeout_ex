@@ -7,6 +7,8 @@ defmodule IdleTimeout.Mixfile do
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     description: description(),
+     package: package(),
      deps: deps(),
 
      # Docs:
@@ -39,4 +41,19 @@ defmodule IdleTimeout.Mixfile do
   defp deps do
     [{:ex_doc, "~> 0.16", only: :dev, runtime: false}]
   end
+
+  defp description() do
+    "A simple mechanism to timeout idle Elixir processes - for example a GenServer - after a given period of inactivity."
+  end
+
+  defp package() do
+    [
+      name: "idle_timeout_ex",
+      files: ["lib", "test", "mix.exs", "README.md"],
+      maintainers: ["Niko Dittmann"],
+      licenses: ["Do-what-you-want"],
+      links: %{"GitHub" => "https://github.com/niko/idle_timeout_ex"}
+    ]
+  end
+
 end
