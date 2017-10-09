@@ -7,6 +7,21 @@ A simple mechanism to timeout idle Elixir processes - for example a GenServer - 
 * Good interface
 * Minimal overhead
 * Obvious implementation
+
+## Interface
+
+* Start your timeout with `IdleTimeout.start/1,2`.
+* On activity renew the timeout with `IdleTimeout.ping/1,2`.
+* Receive an `:EXIT` message when the timeout expires without activity.
+
+## Overhead
+
+A single linked process is spawned.
+
+## Implementation.
+
+The linked process `receive`s `:ping` messages. On timeout the process kills itself. Because it's linked it will kill the parent process as well.
+
   """
 
   @doc ~S"""
