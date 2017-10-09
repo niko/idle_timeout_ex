@@ -10,11 +10,11 @@ use Mix.Config
 
 # You can configure for your application as:
 #
-#     config :genserver_expire, key: :value
+#     config :idle_timeout, key: :value
 #
 # And access this configuration in your application as:
 #
-#     Application.get_env(:genserver_expire, :key)
+#     Application.get_env(:idle_timeout, :key)
 #
 # Or configure a 3rd-party app:
 #

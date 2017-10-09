@@ -1,14 +1,26 @@
-defmodule Expire do
+defmodule IdleTimeout do
   @moduledoc """
-  Documentation for Expire.
+A simple mechanism to timeout idle Elixir processes - for example a GenServer - after a given time span of inactivity.
+
+## Design goals
+
+* Good interface
+* Minimal overhead
+* Obvious implementation
   """
 
   @doc ~S"""
-  start
+Setup the timeout watchdog - for example in GenServer.init/3:
+
+```
+IdleTimeout.start __MODULE__, 2000
+```
+
+First argument must be any unique ID (suitable for Process.register/2), second argument is the first / default timeout. Your GenServer now has to ping the watchdog to prevent timeout.
 
   ## Examples
 
-      iex> Expire.start :some_id
+      iex> IdleTimeout.start :some_id
       #=> pid
 
   """
@@ -19,11 +31,11 @@ defmodule Expire do
   end
 
   @doc """
-  ping
+This will renew the last / default timeout. Optionally a new timeout can be given.
 
   ## Examples
 
-      iex> Expire.ping :some_id
+      iex> IdleTimeout.ping :some_id
       {:ping, nil}
 
   """
@@ -42,7 +54,7 @@ defmodule Expire do
         else
           watchdog expiration                                 # expand expiration time to last expiration again
         end
-      after expiration -> Process.exit(self(), :process_expired)
+      after expiration -> Process.exit(self(), :process_timed_out)
     end
   end
 

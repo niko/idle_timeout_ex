@@ -12,13 +12,13 @@ defmodule EchoGenServer do
   ## Server Callbacks
 
   def init(:ok) do
-    Expire.start __MODULE__, 2000
+    IdleTimeout.start __MODULE__, 2000
 
     {:ok, :state}
   end
 
   def handle_call({:echo, msg}, _from, state) do
-    Expire.ping __MODULE__, 1000
+    IdleTimeout.ping __MODULE__, 1000
     {:reply, msg, state}
   end
 

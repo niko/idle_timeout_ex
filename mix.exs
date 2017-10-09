@@ -1,13 +1,22 @@
-defmodule Expire.Mixfile do
+defmodule IdleTimeout.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :genserver_expire,
+    [app: :idle_timeout,
      version: "0.1.0",
      elixir: "~> 1.4",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     deps: deps()]
+     deps: deps(),
+
+     # Docs:
+     name: "IdleTimeout",
+     source_url: "https://github.com/niko/idle_timeout_ex",
+     homepage_url: "https://github.com/niko/idle_timeout_ex",
+     docs: [main: "IdleTimeout",
+            extras: ["README.md"]]
+
+    ]
   end
 
   # Configuration for the OTP application
@@ -28,6 +37,6 @@ defmodule Expire.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    []
+    [{:ex_doc, "~> 0.16", only: :dev, runtime: false}]
   end
 end
