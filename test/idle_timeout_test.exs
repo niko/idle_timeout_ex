@@ -11,7 +11,7 @@ defmodule IdleTimeoutTest do
     delta = 20 + 0.1 * t # 20ms + 10% of the timeout
     t_start = NaiveDateTime.utc_now
     dt = receive do
-      {:EXIT, _, :process_timed_out} -> NaiveDateTime.diff(NaiveDateTime.utc_now, t_start, :milliseconds)
+      {:EXIT, _, {:shutdown, :process_timed_out}} -> NaiveDateTime.diff(NaiveDateTime.utc_now, t_start, :milliseconds)
     end
     assert_in_delta t, dt, delta
   end

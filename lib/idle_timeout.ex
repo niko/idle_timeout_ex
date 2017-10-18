@@ -61,17 +61,17 @@ This will renew the last / default timeout. Optionally a new timeout can be give
   defp watchdog(expiration) do
     t = NaiveDateTime.utc_now
     receive do
+      {:ping, nil} ->
+        watchdog expiration                                 # expand expiration time to last expiration again
       {:ping, next_ex} ->
-        if next_ex do
-          dt = NaiveDateTime.diff NaiveDateTime.utc_now, t, :milliseconds
-          rest_last_expiration = expiration - dt
-          watchdog Enum.max([rest_last_expiration, next_ex])  # wait for the rest of the last expiration or the new expiration whatever is longer
-        else
-          watchdog expiration                                 # expand expiration time to last expiration again
-        end
-      after expiration -> Process.exit(self(), :process_timed_out)
-    end
-  end
+        dt = NaiveDateTime.diff NaiveDateTime.utc_now, t, :milliseconds
+        rest_last_expiration = expiration - dt
+        watchdog Enum.max([rest_last_expiration, next_ex])  # wait for the rest of the last expiration or the new expiration whatever is longer
+
+    after expiration -> Process.exit(self(), {:shutdown, :process_timed_out})
+    end 
+  end 
+
 
 end
 
