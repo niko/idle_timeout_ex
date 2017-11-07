@@ -55,7 +55,9 @@ This will renew the last / default timeout. Optionally a new timeout can be give
 
   """
   def ping(id, expiration \\ nil) do
-    Process.alive?(Process.whereis id) && send id, {:ping, expiration}
+    Process.whereis(id)
+      && Process.alive?(Process.whereis id)
+      && send(id, {:ping, expiration})
   end
 
   defp watchdog(expiration) do
