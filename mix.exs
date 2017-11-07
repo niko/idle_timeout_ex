@@ -30,7 +30,6 @@ defmodule IdleTimeout.Mixfile do
   end
 
   # Dependencies can be Hex packages:
-  #
   #   {:my_dep, "~> 0.3.0"}
   #
   # Or git/path repositories:
